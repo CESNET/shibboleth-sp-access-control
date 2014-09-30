@@ -9,7 +9,7 @@ The reasons for the access error may be:
  - user's attribute values do not comply with the specified access control definitions
  - some of the attributes used in the access control definitions are missing
 
-In both cases it is necessary that the administrator gets notified about the problem and receives as much information as possible. Although is possible to customize the standard Shibboleth SP access error page using the appropriate template, it provides very few options.
+In both cases it is necessary that the administrator gets notified about the problem and receives as much information as possible. Although it is possible to customize the standard Shibboleth SP access error page using the appropriate template, it provides very few options.
 
 ## Workaround
 
@@ -29,7 +29,7 @@ This is our "diagnostic" page. It simply logs all environment variables (`$_SERV
 
 This is a Shibboleth SP template page for the access error. It contains a generic error message and asks the user to click the "Diagnose" button. Make sure that the button links to our "diagnostic" page.
 
-Then you should configure Shibboleth to use it - in `shibbolerh2.xml`:
+Then you should configure Shibboleth to use it - in `shibboleth2.xml`:
 ```xml
 <Errors supportContact="admin@example.cz"
    logoLocation="/shibboleth-sp/logo.jpg"
