@@ -50,9 +50,24 @@ if (file_put_contents($logFile, $msg, FILE_APPEND) === false) {
     Thank you for helping us diagnose the problem.
     </p>
     <p>The error has been assigned a reference string <code><?php echo $uniqueId; ?></code>.
-    Please send this reference in an email to <a href="mailto:<?php echo $contactEmail; ?>"><?php echo $contactEmail?></a>.
+    Please send this reference in an email to <a href="mailto:<?php echo $contactEmail; ?>?Subject=<?php echo "Access error ID $uniqueId"?>"><?php echo $contactEmail?></a>.
+    </p>
+    <p>
+    If you are interrested in logged information, you can see it after clicking the button below.
+    </p>
+    <pre id="info" style="display: none">
+    <?php echo $msg; ?>
+    </pre>
+    <p>
+        <a class="btn btn-danger btn-lg" onClick="showInformation()">Show information</a>
     </p>
 </div>
+
+<script>
+function showInformation() {
+    document.getElementById("info").style.display = 'block';
+}
+</script>
 
 </body>
 </html>
