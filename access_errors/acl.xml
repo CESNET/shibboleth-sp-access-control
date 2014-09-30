@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AccessControl type="edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl">
+    <RuleRegex require="affiliation">^unknown@.+\.cz$</RuleRegex>
+</AccessControl>
