@@ -15,7 +15,7 @@ In both cases it is necessary that the administrator gets notified about the pro
 
 One possible workaround is to make the standard Shibboleth SP access error page redirect the user to a custom error page, where the error can be diagnosed. For obvious reasons that page must be also protected by Shibboleth, but with no access control rules.
 
-The custom error page may analyze available user attributes, log all available information (such as evnironment variables, time, etc.) and display more comprehensive error description to the user.
+The custom error page may analyze available user attributes, log all available information (such as environment variables, time, etc.) and display more comprehensive error description to the user.
 
 ## Example
 
