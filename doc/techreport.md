@@ -75,9 +75,9 @@ Next, we can define attribute mapping in `attribute-map.xml` file. The following
 
 ```xml
 <mdattr:EntityAttributes>
-    <mdasrt:Attribute Name="http://macedir.org/entity-category" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
-        <mdasrt:AttributeValue>http://eduid.cz/uri/idp-group/library</mdasrt:AttributeValue>
-    </mdasrt:Attribute>
+    <saml:Attribute Name="http://macedir.org/entity-category" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+        <saml:AttributeValue>http://eduid.cz/uri/idp-group/library</saml:AttributeValue>
+    </saml:Attribute>
 </mdattr:EntityAttributes>
 ```
 
