@@ -19,7 +19,7 @@ The solution presented here assumes that an Identity Provider supplies a Service
 ## Technical Background
 Service Provider access control, as stated above, can be performed in Shibboleth itself or in the application a user is logging in. However, before creating access control rules, SAML (Security Assertion Markup Language) attributes have to be mapped to the corresponding environment variables (or optionally HTTP headers), otherwise the SP ignores them  [NativeSPAddAttribute][].
 
-Attribute mapping is defined in the `attribute-map.xml` configuration file. Each attribute is mapped using an `<Attribute>` element. For example, to map user’s email address to a local variable `mail`, we need to provide the code of the attribute `urn:oid:0.9.2342.19200300.100.1.3` and the name of the local variable:
+Attribute mapping is defined in the `attribute-map.xml` configuration file. Each attribute is mapped using an `&lt;Attribute&gt;` element. For example, to map user’s email address to a local variable `mail`, we need to provide the code of the attribute `urn:oid:0.9.2342.19200300.100.1.3` and the name of the local variable:
 
 ```xml
 <Attribute name="urn:oid:0.9.2342.19200300.100.1.3" id="mail"/>
@@ -27,13 +27,13 @@ Attribute mapping is defined in the `attribute-map.xml` configuration file. Each
 
 Once the attributes are mapped, they can be used for access control. Two methods are available. The first is to use the XML-based mechanism provided by the Shibboleth SP and the second is to use Apache style access control if Apache is the web server under the SP.
 
-Apache users can place access control rules in `<Directory>`, `<File>` and `<Location>` blocks in the main configuration or in a separate per-directory `.htaccess` file. There is a number of rule types described in the official Shibboleth documentation [NativeSPhtaccess][]. Regular expressions and a modifier to invert the rule might be used in access control definitions. For example, the following rule allows everyone except students from Czech institutions to access a secured resource:
+Apache users can place access control rules in `&lt;Directory&gt;`, `&lt;File&gt;` and `&lt;Location&gt;` blocks in the main configuration or in a separate per-directory `.htaccess` file. There is a number of rule types described in the official Shibboleth documentation [NativeSPhtaccess][]. Regular expressions and a modifier to invert the rule might be used in access control definitions. For example, the following rule allows everyone except students from Czech institutions to access a secured resource:
 
 ```apache
 Require shib-attr affiliation ! ~ ^student@*\.cz$
 ```
 
-However, compared to the XML-based mechanism, this approach offers only limited choices to filter access. XML-based mechanism rules can be put into two places. The first place is inline placement in the `shibboleth2.xml` configuration file. The second place is an external configuration file which is referenced from the Apache configuration. In both cases, access rules have to be written under `<AccessControl>` root element. Moreover, if using external file, `type` attribute with value `edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl` must be added to the `<AccessControl>` element [NativeSPXMLAccessControl][].
+However, compared to the XML-based mechanism, this approach offers only limited choices to filter access. XML-based mechanism rules can be put into two places. The first place is inline placement in the `shibboleth2.xml` configuration file. The second place is an external configuration file which is referenced from the Apache configuration. In both cases, access rules have to be written under `&lt;AccessControl&gt;` root element. Moreover, if using external file, `type` attribute with value `edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl` must be added to the `&lt;AccessControl&gt;` element [NativeSPXMLAccessControl][].
 
 There are various child elements to format access rules in a simple, boolean-capable language. Regular expressions might be mixed with operators such as AND, OR and NOT in order to precisely define rules [NativeSPXMLAccessControl][]. In the following example, the access control rules are placed in an external file and allow access to all CESNET users, who have logged in using their password with the exception of user “jop”:
 
@@ -63,7 +63,7 @@ The objective is to allow only library employees to consume services and to rest
 In the following subsections, we present our solution to filter users based on `affiliation` attribute that have to match the regular expression `^employee@.+\.cz$`, i.e. only employees from Czech organizations are allowed.
 
 ### Shibboleth Configuration
-We have to set a prefix for metadata attributes in `shibboleth2.xml` file inside `<ApplicationDefaults>` element. Setting this option will prefix attributes extracted from metadata with that value and enable applications to differentiate between attributes about the user and attributes about the user's identity provider [NativeSPApplication][].
+We have to set a prefix for metadata attributes in `shibboleth2.xml` file inside `&lt;ApplicationDefaults&gt;` element. Setting this option will prefix attributes extracted from metadata with that value and enable applications to differentiate between attributes about the user and attributes about the user's identity provider [NativeSPApplication][].
 
 To set the prefix to `md_` (“md” stands for metadata) value, edit `shibboleth2.xml` appropriately:
 
