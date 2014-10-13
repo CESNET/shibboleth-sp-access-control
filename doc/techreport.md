@@ -141,19 +141,3 @@ In this technical report, we have described a situation in our federation that r
 
 For the presented solution we have used entity categories, which help us to categorize particular IdPs. On the category of an IdP we can perform access control similarly to user attributes.
 
-## References
-[Shibboleth]: http://shibboleth.net/
-[Entitlements]: https://www.incommon.org/federation/attributesummary.html
-[Apache]: http://httpd.apache.org/
-[CESNET]: http://www.cesnet.cz/
-[eduID.cz]: http://www.eduid.cz/
-[eduID.cz-SPAC]: https://www.eduid.cz/cs/tech/filtrovani-uzivatelu-dokumentace
-[NativeSPApplication]: https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPApplication
-[NativeSPApacheConfig]: https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPApacheConfig
-[NativeSPAccessControl]: https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPAccessControl
-[NativeSPXMLAccessControl]: https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPXMLAccessControl
-[NativeSPAddAttribute]: https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPAddAttribute
-[NativeSPhtaccess]: https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPhtaccess
-[ErrorHandling]: https://github.com/CESNET/shibboleth-sp-access-control/tree/master/access_errors
-
-
