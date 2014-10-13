@@ -1,10 +1,5 @@
 # Shibboleth Service Provider Access Control
 
-## Abstract
-This technical report deals with implementing access control to a resource secured by a Shibboleth Service Provider. It contains step by step instructions how to permit only a specified group of users to access a service. A decision about permitting a user is made on the Service Provider's side based on an attribute found in federation metadata. This document does not cover neither Shibboleth Service Provider nor Shibboleth Identity Provider installation and configuration, it is meant for setups where only access control is required to be implemented on top of a working federated identity environment.
-
-*Keywords:* Access Control, Apache, Attributes, Authorization, Federated Identity, Identity Provider, Service Provider, Shibboleth
-
 ## Introduction
 As the number of online services is growing, so grows the number of usernames and passwords used to login which is uncomfortable for users. Simultaneously, user management is getting very time consuming and more complicated which is uncomfortable for organizations operating these services. This unpleasant issue is very well addressed by the federated identity technology, implemented by the open-source project [Shibboleth][]. This software implements both the essential elements of a federated identity access, i.e. an Identity Provider (IdP) and a Service Provider (SP).
 
