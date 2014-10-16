@@ -178,7 +178,7 @@ One possible workaround is to make the standard Shibboleth SP access error page 
     logoLocation="/shibboleth-sp/logo.jpg"
     styleSheet="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
     access="/path/to/accessError.html"
-    …
+    ...
 />
 ```
 
