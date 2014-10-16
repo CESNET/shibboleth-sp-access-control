@@ -162,7 +162,7 @@ Every SP in a federation should periodically download current federation metadat
 
 If an error occurs, we do not know the reason. There are two approaches. First, redirecting user to a web page to log environment variables and trying to diagnose what has happened. Second, integrating access control to the application users are logging in. The second approach improve the user experience, but it is far more complicated to implement and sometimes even impossible. In this document, we are focusing on the first variant in the following subsection.
 
-##### IMAGE: 403 Forbidden #####
+![Access Forbidden](img/403-forbidden.png)
 
 Diagnosing login failure
 Although Shibboleth SP provides very flexible access control tools, in case of an access error, only a generic page is displayed providing too little information. There is no error message in the log either, so the administrator has no further information available. The reasons for the access error may be:
