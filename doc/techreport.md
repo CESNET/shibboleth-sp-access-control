@@ -119,40 +119,40 @@ The presented solution might be deployed in a number of various situations where
 
     Application for planning exams ACL definition:
     ```xml
-<AccessControl type="edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl">
-    <NOT>
-        <RuleRegex require="affiliation">^student@.+\.cz$</RuleRegex>
-    </NOT>
-</AccessControl>
+    <AccessControl type="edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl">
+        <NOT>
+            <RuleRegex require="affiliation">^student@.+\.cz$</RuleRegex>
+        </NOT>
+    </AccessControl>
     ```
 
     Application for applying for exams ACL definition:
     ```xml
-<AccessControl type="edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl">
-    <RuleRegex require="affiliation">^student@.+\.cz$</RuleRegex>
-</AccessControl>
+    <AccessControl type="edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl">
+        <RuleRegex require="affiliation">^student@.+\.cz$</RuleRegex>
+    </AccessControl>
     ```
 
 2. An application that requires to identify a user unambiguously. This can be performed by using three various attributes. They are, for example, `ePPN` (eduPersonPrincipalName) attribute, `targetedID` attribute or `email` address. An incoming user is accepted to view the resource when any of the mentioned attributes match the filter rules.
 
     ACL definition:
     ```xml
-<AccessControl type="edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl">
-    <OR>
-        <RuleRegex require="eduPersonPrincipalName">.+</RuleRegex>
-        <RuleRegex require="eduPersonTargetedId">.+</RuleRegex>
-        <RuleRegex require="mail">.+@.+\.cz</RuleRegex>
-    </OR>
-</AccessControl>
+    <AccessControl type="edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl">
+        <OR>
+            <RuleRegex require="eduPersonPrincipalName">.+</RuleRegex>
+            <RuleRegex require="eduPersonTargetedId">.+</RuleRegex>
+            <RuleRegex require="mail">.+@.+\.cz</RuleRegex>
+        </OR>
+    </AccessControl>
     ```
 
 3. Data banks with scientific papers and other materials have contracts with universities to allow accessing content. However, only students should have access to resources provided.
 
     ACL definition:
     ```xml
-<AccessControl type="edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl">
-    <RuleRegex require="affiliation">^student@.+\.cz$</RuleRegex>
-</AccessControl>
+    <AccessControl type="edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl">
+        <RuleRegex require="affiliation">^student@.+\.cz$</RuleRegex>
+    </AccessControl>
     ```
 
 ## Issues
