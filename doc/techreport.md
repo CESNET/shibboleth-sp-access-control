@@ -5,7 +5,7 @@ As the number of online services is growing, so grows the number of usernames an
 
 Accessing a private resource is preceded by two steps. The first is authentication (i.e. determining who the user is) and the second is authorization (i.e. deciding whether the user should be allowed to access the resource or not). This second step (authorization, access control, ...) is the main topic of this technical report. Without proper access control management all users are allowed to use any service which is probably not a desired situation.
 
-There are basically two main approaches to access control in a federated environment. It is access control at the IdP side and access control at the SP side. Access control managed by an IdP is associated with `eduPersonEntitlement` attribute to name at least one. “[Entitlements][] represent an assertion of authorization to something, precomputed and asserted by the identity provider. This attribute is typically used to assert privileges maintained centrally.” On one hand, the IdP sets attribute values that enable a user to log in. On the other hand, the SP still decides about allowing access. If access control at the SP side is deployed, the SP lets in only the user whose attributes match criteria. Thus, both approaches are quite similar, but still not the same
+There are basically two main approaches to access control in a federated environment. It is access control at the IdP side and access control at the SP side. Access control managed by an IdP is associated with `eduPersonEntitlement` attribute to name at least one. "[Entitlements][] represent an assertion of authorization to something, precomputed and asserted by the identity provider. This attribute is typically used to assert privileges maintained centrally." On one hand, the IdP sets attribute values that enable a user to log in. On the other hand, the SP still decides about allowing access. If access control at the SP side is deployed, the SP lets in only the user whose attributes match criteria. Thus, both approaches are quite similar, but still not the same
 
 Access control at the SP side can be performed either at the Shibboleth level or at the application level. Both ways have their advantages and disadvantages. The Shibboleth level is far more easier to implement, but when it comes to error handling, we are very limited as only a small set of variables are available to properly inform the user about what went wrong and how to solve it. Controlling access at the application level handles errors better, however, the application has to be modified which might be a very time consuming and complex task or even impossible. In this technical report, we will describe in detail how to implement access control at the Shibboleth SP level.
 
@@ -30,17 +30,17 @@ Require shib-attr affiliation ! ~ ^student@*\.cz$
 
 However, compared to the XML-based mechanism, this approach offers only limited choices to filter access. XML-based mechanism rules can be put into two places. The first place is inline placement in the `shibboleth2.xml` configuration file. The second place is an external configuration file which is referenced from the Apache configuration. In both cases, access rules have to be written under `&lt;AccessControl&gt;` root element. Moreover, if using external file, thus not writing access control definition into `shibboleth2.xml` configuration file, `type` attribute with value `edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl` must be added to the [`&lt;AccessControl&gt;` element][NativeSPXMLAccessControl].
 
-There are various child elements to format access rules in a simple, boolean-capable language. Regular expressions might be mixed with operators such as AND, OR and NOT in order to precisely define [rules][NativeSPXMLAccessControl]. In the following example, the access control rules are placed in an external file and allow access to all CESNET users, who have logged in using their password with the exception of user “jop”:
+There are various child elements to format access rules in a simple, boolean-capable language. Regular expressions might be mixed with operators such as AND, OR and NOT in order to precisely define [rules][NativeSPXMLAccessControl]. In the following example, the access control rules are placed in an external file and allow access to all CESNET users, who have logged in using their password with the exception of user "jop":
 
 ```xml
 <AccessControl type="edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl">
     <AND>
-        <RuleRegex require=”affiliation”>^.+@cesnet\.cz$</Rule>
+        <RuleRegex require="affiliation">^.+@cesnet\.cz$</Rule>
         <NOT>
-            <Rule require=”user”>jop@cesnet.cz</Rule>
+            <Rule require="user">jop@cesnet.cz</Rule>
         </NOT>
         <OR>
-            <Rule require=”authnContextClassRef”>urn:oasis:names:tc:SAML:2.0:ac:classes:Password</Rule>
+            <Rule require="authnContextClassRef">urn:oasis:names:tc:SAML:2.0:ac:classes:Password</Rule>
         </OR>
     </AND>
 </AccessControl>
@@ -60,7 +60,7 @@ In the following subsections, we present our solution to filter users based on `
 ### Shibboleth Configuration
 We have to set a prefix for metadata attributes in `shibboleth2.xml` file inside `&lt;ApplicationDefaults&gt;` element. Setting this option will [prefix attributes][NativeSPApplication] extracted from metadata with that value and enable applications to differentiate between attributes about the user and attributes about the user's identity provider.
 
-To set the prefix to `md_` (“md” stands for metadata) value, edit `shibboleth2.xml` appropriately:
+To set the prefix to `md_` ("md" stands for metadata) value, edit `shibboleth2.xml` appropriately:
 
 ```xml
 <ApplicationDefaults entityID="https://example.org/shibboleth/" metadataAttributePrefix="md_">
@@ -119,17 +119,17 @@ The presented solution might be deployed in a number of various situations where
 
 Application for planning exams ACL definition:
 ```xml
-<AccessControl type=”edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl”>
+<AccessControl type="edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl">
     <NOT>
-        <RuleRegex require=”affiliation”>^student@.+\.cz$</RuleRegex>
+        <RuleRegex require="affiliation">^student@.+\.cz$</RuleRegex>
     </NOT>
 </AccessControl>
 ```
 
 Application for applying for exams ACL definition:
 ```xml
-<AccessControl type=”edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl”>
-        <RuleRegex require=”affiliation”>^student@.+\.cz$</RuleRegex>
+<AccessControl type="edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl">
+        <RuleRegex require="affiliation">^student@.+\.cz$</RuleRegex>
 </AccessControl>
 ```
 
@@ -137,11 +137,11 @@ Application for applying for exams ACL definition:
 
 ACL definition:
 ```xml
-<AccessControl type=”edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl”>
+<AccessControl type="edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl">
     <OR>
-        <RuleRegex require=”eduPersonPrincipalName”>.+</RuleRegex>
-        <RuleRegex require=”eduPersonTargetedId”>.+</RuleRegex>
-        <RuleRegex require=”mail”>.+@.+\.cz</RuleRegex>
+        <RuleRegex require="eduPersonPrincipalName">.+</RuleRegex>
+        <RuleRegex require="eduPersonTargetedId">.+</RuleRegex>
+        <RuleRegex require="mail">.+@.+\.cz</RuleRegex>
     </OR>
 </AccessControl>
 ```
@@ -150,8 +150,8 @@ ACL definition:
 
 ACL definition:
 ```xml
-<AccessControl type=”edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl”>
-    <RuleRegex require=”affiliation”>^student@.+\.cz$</RuleRegex>
+<AccessControl type="edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl">
+    <RuleRegex require="affiliation">^student@.+\.cz$</RuleRegex>
 </AccessControl>
 ```
 
@@ -174,10 +174,10 @@ In both cases, it is necessary that the administrator gets notified about the pr
 One possible workaround is to make the standard Shibboleth SP access error page redirect the user to a custom error page, where the error can be diagnosed. To use prepared example error page, download `accessError.html` page from our [repository][ErrorHandling] and configure Shibboleth SP configuration file `shibboleth2.xml`.
 
 ```xml
-<Errors supportContact=”admin@example.cz”
-    logoLocation=”/shibboleth-sp/logo.jpg”
-    styleSheet=”//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css”
-    access=”/path/to/accessError.html”
+<Errors supportContact="admin@example.cz"
+    logoLocation="/shibboleth-sp/logo.jpg"
+    styleSheet="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
+    access="/path/to/accessError.html"
     …
 />
 ```
