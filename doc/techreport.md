@@ -182,7 +182,7 @@ One possible workaround is to make the standard Shibboleth SP access error page 
 />
 ```
 
-##### IMAGE: accessError.html #####
+![Authorization Failed](img/auth-failed.png)
 
 The `accessError.html` page links to a PHP script `accessError.php` that provides diagnostics. In our example page, the address is `/test-tech-report/diagnose`. For obvious reasons that page must be also protected by Shibboleth, but with no access control rules. Apache configuration should be altered similarly to the following:
 
@@ -196,7 +196,7 @@ The `accessError.html` page links to a PHP script `accessError.php` that provide
 
 The custom error page `accessError.php` may analyze available user attributes, log all available information (such as environment variables, time, etc.) into a log file at the server and display a more comprehensive error description to the user.
 
-##### IMAGE: accessError.php #####
+![Diagnose Access Error](img/diag-error.png)
 
 All files including configuration example is available in our [repository][ErrorHandling].
 
