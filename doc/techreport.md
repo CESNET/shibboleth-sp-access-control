@@ -117,26 +117,26 @@ The presented solution might be deployed in a number of various situations where
 
 1. Although teachers and students have their accounts from the same university, teachers are allowed to use an application for planning exams, while students are not. And on the contrary, students are allowed to use an application for applying for exams, while teachers are not.
 
-Application for planning exams ACL definition:
-```xml
+    Application for planning exams ACL definition:
+    ```xml
 <AccessControl type="edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl">
     <NOT>
         <RuleRegex require="affiliation">^student@.+\.cz$</RuleRegex>
     </NOT>
 </AccessControl>
-```
+    ```
 
-Application for applying for exams ACL definition:
-```xml
+    Application for applying for exams ACL definition:
+    ```xml
 <AccessControl type="edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl">
-        <RuleRegex require="affiliation">^student@.+\.cz$</RuleRegex>
+    <RuleRegex require="affiliation">^student@.+\.cz$</RuleRegex>
 </AccessControl>
-```
+    ```
 
 2. An application that requires to identify a user unambiguously. This can be performed by using three various attributes. They are, for example, `ePPN` (eduPersonPrincipalName) attribute, `targetedID` attribute or `email` address. An incoming user is accepted to view the resource when any of the mentioned attributes match the filter rules.
 
-ACL definition:
-```xml
+    ACL definition:
+    ```xml
 <AccessControl type="edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl">
     <OR>
         <RuleRegex require="eduPersonPrincipalName">.+</RuleRegex>
@@ -144,16 +144,16 @@ ACL definition:
         <RuleRegex require="mail">.+@.+\.cz</RuleRegex>
     </OR>
 </AccessControl>
-```
+    ```
 
 3. Data banks with scientific papers and other materials have contracts with universities to allow accessing content. However, only students should have access to resources provided.
 
-ACL definition:
-```xml
+    ACL definition:
+    ```xml
 <AccessControl type="edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl">
     <RuleRegex require="affiliation">^student@.+\.cz$</RuleRegex>
 </AccessControl>
-```
+    ```
 
 ## Issues
 One issue that may appear with this type of access control is related to attribute release. There are basically two scenarios. In the first scenario, the IdP does not release the required attribute to all the SPs in the federation. Even worse, the IdP might not release the attribute at all. In the second scenario, the attribute is released, however, chances are that the value is different from the expected. In such situations, proper error handling should take place to inform the user about what has gone wrong.
