@@ -196,7 +196,7 @@ The `accessError.html` page links to a PHP script `accessError.php` that provide
 
 The custom error page `accessError.php` may analyze available user attributes, log all available information (such as environment variables, time, etc.) into a log file at the server and display a more comprehensive error description to the user.
 
-![Diagnose Access Error](img/diag-error.png)
+![Diagnose Access Error](img/auth-diag.png)
 
 All files including configuration example is available in our [repository](https://github.com/CESNET/shibboleth-sp-access-control/tree/master/access_errors).
 
