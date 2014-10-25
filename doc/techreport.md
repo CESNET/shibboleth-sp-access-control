@@ -118,6 +118,7 @@ The presented solution might be deployed in a number of various situations where
 1. Although teachers and students have their accounts from the same university, teachers are allowed to use an application for planning exams, while students are not. And on the contrary, students are allowed to use an application for applying for exams, while teachers are not.
 
     Application for planning exams ACL definition:
+
     ```xml
     <AccessControl type="edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl">
         <NOT>
@@ -127,6 +128,7 @@ The presented solution might be deployed in a number of various situations where
     ```
 
     Application for applying for exams ACL definition:
+
     ```xml
     <AccessControl type="edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl">
         <RuleRegex require="affiliation">^student@.+\.cz$</RuleRegex>
@@ -136,6 +138,7 @@ The presented solution might be deployed in a number of various situations where
 2. An application that requires to identify a user unambiguously. This can be performed by using three various attributes. They are, for example, `ePPN` (eduPersonPrincipalName) attribute, `targetedID` attribute or `email` address. An incoming user is accepted to view the resource when any of the mentioned attributes match the filter rules.
 
     ACL definition:
+
     ```xml
     <AccessControl type="edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl">
         <OR>
@@ -149,6 +152,7 @@ The presented solution might be deployed in a number of various situations where
 3. Data banks with scientific papers and other materials have contracts with universities to allow accessing content. However, only students should have access to resources provided.
 
     ACL definition:
+
     ```xml
     <AccessControl type="edu.internet2.middleware.shibboleth.sp.provider.XMLAccessControl">
         <RuleRegex require="affiliation">^student@.+\.cz$</RuleRegex>
