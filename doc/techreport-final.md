@@ -3,9 +3,9 @@
 ## Introduction
 As the number of online services is growing, so grows the number of usernames and passwords used to login which is uncomfortable for users. Simultaneously, user management is getting very time consuming and more complicated which is uncomfortable for organizations operating these services. This unpleasant issue is very well addressed by the federated identity technology, implemented by the open-source project Shibboleth [Shibboleth](http://shibboleth.net). This software implements both the essential elements of a federated identity access, i.e. an Identity Provider (IdP) and a Service Provider (SP).
 
-Accessing a private resource is preceded by two steps. The first is authentication (i.e. determining who the user is) and the second is authorization (i.e. deciding whether the user should be allowed to access the resource or not). This second step (authorization, access control, ...) is the main topic of this technical report. Without proper access control management all users are allowed to use any service which is probably not a desired situation.
+Accessing a private resource is preceded by two steps. The first is authentication (i.e. determining who the user is) and the second is authorization (i.e. deciding whether the user is allowed to access the resource or not). This second step (authorization, access control, ...) is the main topic of this technical report. Without proper access control management all users are allowed to use any service which is probably not a desired situation.
 
-There are basically two main approaches to access control in a federated environment. It is access control at the IdP side and access control at the SP side. Access control managed by an IdP is associated with `eduPersonEntitlement` attribute to name at least one. "Entitlements represent an assertion of authorization to something, precomputed and asserted by the identity provider. This attribute is typically used to assert privileges maintained centrally [Entitlements](https://www.incommon.org/federation/attributesummary.html)." On one hand, the IdP sets attribute values that enable a user to log in. On the other hand, the SP still decides about allowing access. If access control at the SP side is deployed, the SP lets in only the user whose attributes match criteria. Thus, both approaches are quite similar, but still not the same
+There are basically two main approaches to access control in a federated environment. It is access control at the IdP side and access control at the SP side. Access control managed by an IdP is associated with `eduPersonEntitlement` attribute to name at least one. "Entitlements represent an assertion of authorization to something, precomputed and asserted by the identity provider. This attribute is typically used to assert privileges maintained centrally [Entitlements](https://www.incommon.org/federation/attributesummary.html)." On one hand, the IdP sets attribute values that enable a user to log in. On the other hand, the SP still decides about allowing access. If access control at the SP side is deployed, the SP lets in only the user whose attributes match criteria. Thus, both approaches are quite similar, but still not the same.
 
 Access control at the SP side can be performed either at the Shibboleth level or at the application level. Both ways have their advantages and disadvantages. The Shibboleth level is far more easier to implement, but when it comes to error handling, we are very limited as only a small set of variables are available to properly inform the user about what went wrong and how to solve it. Controlling access at the application level handles errors better, however, the application has to be modified which might be a very time consuming and complex task or even impossible. In this technical report, we will describe in detail how to implement access control at the Shibboleth SP level.
 
@@ -20,7 +20,7 @@ Attribute mapping is defined in the `attribute-map.xml` configuration file. Each
 <Attribute name="urn:oid:0.9.2342.19200300.100.1.3" id="mail"/>
 ```
 
-Once the attributes are mapped, they can be used for access control. Two methods are available. The first is to use the XML-based mechanism provided by the Shibboleth SP and the second is to use Apache style access control if Apache is the web server under the SP.
+Once the attributes are mapped, they can be used for access control. Two methods are available. The first is to use the XML-based mechanism provided by the Shibboleth SP and the second is to use Apache style access control if Apache [Apache](http://httpd.apache.org) is the web server under the SP.
 
 Apache users can place access control rules in `&lt;Directory&gt;`, `&lt;File&gt;` and `&lt;Location&gt;` blocks in the main configuration or in a separate per-directory `.htaccess` file. There is a number of rule types described in the official Shibboleth documentation [NativeSPhtaccess](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPhtaccess). Regular expressions and a modifier to invert the rule might be used in access control definitions. For example, the following rule allows everyone except students from Czech institutions to access a secured resource:
 
@@ -49,7 +49,7 @@ There are various child elements to format access rules in a simple, boolean-cap
 Not only users’ attributes from IdPs can be used to filter access. It is also possible to use information from sources such as federation metadata, i.e. entity categories. In this case, Shibboleth SP needs to map entity attributes from metadata similarly as in the case with users’ attributes released by an IdP. Although attributes extracted from metadata should be prefixed in order to be distinguishable from users’ attributes. This is explained in more detail and with examples in the following section.
 
 ## Example Use Case
-CESNET [CESNET](http://www.cesnet.cz) operates eduID.cz [eduID.cz](http://www.eduid.cz) federation which is designated for academic users only. However, non-academic users are present in the federation nowadays. One example of such users are graduate students who still have their university accounts. Another example are public library users.  These non-academic users should not have access to some federation resources due to various reasons like licenses, etc.
+CESNET [CESNET](http://www.cesnet.cz) operates eduID.cz [eduID.cz](http://www.eduid.cz) federation which was designated for academic users only. However, non-academic users are present in the federation nowadays. One example of such users are graduate students who still have their university accounts. Another example are public library users.  These non-academic users should not have access to some federation resources due to various reasons like licenses, etc.
 
 Although the solution we present is not the only one possible, we have decided to implement it, since administrators of SPs that do not care about public library users do not need to change anything in their SP configuration. Only those SPs' administrators that would like to disallow access to public library users have to alter their configuration.
 
@@ -168,10 +168,11 @@ If an error occurs, we do not know the reason. There are two approaches. First, 
 
 ![Access Forbidden](img/403-forbidden.png)
 
-Diagnosing login failure
+### Diagnosing login failure
 Although Shibboleth SP provides very flexible access control tools, in case of an access error, only a generic page is displayed providing too little information. There is no error message in the log either, so the administrator has no further information available. The reasons for the access error may be:
-User's attribute values do not comply with the specified access control definitions.
-Some of the attributes used in the access control definitions are missing.
+
+1. User's attribute values do not comply with the specified access control definitions.
+2. Some of the attributes used in the access control definitions are missing.
 
 In both cases, it is necessary that the administrator gets notified about the problem and receives as much information as possible. Although it is possible to customize the standard Shibboleth SP access error page using the appropriate template, it provides very few options.
 
@@ -207,5 +208,5 @@ All files including configuration example is available in our repository [ErrorH
 ## Conclusion
 In this technical report, we have described a situation in our federation that requires implementing access control mechanism. The method we have decided to follow is easy to implement and does not cause any service interruptions while deploying. Additionally, if there is no need for access control at a particular SP, nothing has to be done at all.
 
-For the presented solution we have used entity categories, which help us to categorize particular IdPs. On the category of an IdP we can perform access control similarly to user attributes.
+For the presented solution we have used entity categories, which help us to categorize particular IdPs. On the category of an IdP, we can perform access control similarly to user attributes.
 
